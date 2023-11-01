@@ -23,6 +23,7 @@ func main() {
 		{2267, 1079, 502, 223, 90, 90},
 		{2733, 1421, 748, 402, 223, 223},
 	}
+	var pokkerCount []int = make([]int, 16)
 	onesCount := 0
 	prevDigit := byte(0)
 	curSerLen := 1
@@ -40,6 +41,8 @@ func main() {
 			prevDigit = curDigit
 			curSerLen++
 		}
+		pokkerCount[el>>4]++
+		pokkerCount[el&15]++
 	}
 	maxSerLen = max(maxSerLen, curSerLen)
 	fmt.Printf("Ones count: %v\n", onesCount)
@@ -72,6 +75,21 @@ func main() {
 	}
 	if !failFlag {
 		fmt.Println("Pass")
+	}
+
+	x3 := float64(0)
+	for _, el := range pokkerCount {
+		x3 += float64(el * el)
+	}
+	x3 /= 5000
+	x3 *= 16
+	x3 -= 5000
+
+	fmt.Printf("\nX3 for Pokker test: %v\n", x3)
+	if x3 > 1.03 && x3 < 57.4 {
+		fmt.Println("Pass")
+	} else {
+		fmt.Println("Fail")
 	}
 
 	/*for i := range sequence {
